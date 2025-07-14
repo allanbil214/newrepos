@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace newrepos
+{
+    class newrepos
+    {
+        static void newrepos(string[] args)
+        {
+            Console.WriteLine("hello");
+        }
+    }
+}
