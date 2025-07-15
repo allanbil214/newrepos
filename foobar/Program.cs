@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            int maxLimit = 15;
+            int maxLimit = 30;
 
             for (int i = 1; i <= maxLimit; i++)
             {
