@@ -2,21 +2,22 @@
 
 namespace GuessTheNumber
 {
-    public class Game
+    internal class Game
     {
-        public int userGuesses = 0;
-        public int generatedNumber = 0;
-        public int howManyNumber = 0;
-        public int thresholdHint = 0;
-        public bool tryAgain = true;
+        private int userGuesses = 0;
+        private int generatedNumber = 0;
+        private int howManyNumber = 0;
+        private int thresholdHint = 0;
+        private int howManyRetries = 0;
+        private bool tryAgain = true;
         
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Game game = new Game();
             game.StartTheGame();
         }
 
-        void StartTheGame()
+        private void StartTheGame()
         {
             do
             {
@@ -25,6 +26,7 @@ namespace GuessTheNumber
                 howManyNumber = TryParsing("\n[=] How many number you want to guess?");
                 generatedNumber = GenerateTheNumber(howManyNumber);
                 thresholdHint = TryParsing("\n[=] How many threshold you want?");
+                howManyRetries = TryParsing("\n[=] How many retries do you want?");
 
                 Console.WriteLine($"\n[i] Now guess the number between 1 and {howManyNumber}");
                 LetTheUserGuess();
@@ -34,24 +36,33 @@ namespace GuessTheNumber
             Console.WriteLine("\n[i] Bye-bye!\n");
         }
 
-        int GenerateTheNumber(int totalNumber)
+        private int GenerateTheNumber(int totalNumber)
         {
             Random rand = new Random();
             return rand.Next(1, totalNumber);
         }
 
-        void LetTheUserGuess()
+        private void LetTheUserGuess()
         {
-            bool winning = false;
+            bool done = false;
 
-            while (winning == false)
+            while (done == false)
             {
-                userGuesses = TryParsing("\n[=] Can you guess the number?");
-                winning = GuessingNow(userGuesses, generatedNumber);
+                Console.WriteLine(howManyRetries);
+                if (howManyRetries != 0)
+                {
+                    userGuesses = TryParsing("\n[=] Can you guess the number?");
+                    done = GuessingNow(userGuesses, generatedNumber);
+                }
+                else
+                {
+                    Console.WriteLine("\n[i] Sorry You Lose!!\n");
+                    done = true;
+                }
             } 
         }
 
-        bool GuessingNow(int guessedNumber, int numberGenerated)
+        private bool GuessingNow(int guessedNumber, int numberGenerated)
         {
             if (guessedNumber == numberGenerated)
             {
@@ -68,14 +79,17 @@ namespace GuessTheNumber
             else if (Math.Abs(guessedNumber - numberGenerated) < thresholdHint)
             {
                 Console.WriteLine("[i] Sorry but woah, you are closer than you thought!");
+                howManyRetries -= 1;
             }
             else if (guessedNumber < numberGenerated)
             {
                 Console.WriteLine("[i] Sorry you are wayy lower than you thought, try higher number");
+                howManyRetries -= 1;
             }
             else if (guessedNumber > numberGenerated)
             {
                 Console.WriteLine("[i] Sorry you are wayy above than you thought, try lower number");
+                howManyRetries -= 1;
             }
             else
             {
@@ -85,7 +99,7 @@ namespace GuessTheNumber
             return false;
         }
 
-        int TryParsing(string msg)
+        private int TryParsing(string msg)
         {
             while (true)
             {
