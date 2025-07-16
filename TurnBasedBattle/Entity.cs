@@ -8,6 +8,7 @@ namespace TurnBasedBattle
         public int healthPoint = 50;
         public int attackPower = 3;
         public int attackPowerMult = 1;
+        public int innateDefense = 1;
         public string name = "Entity";
         public bool isAlive = true;
 
@@ -15,6 +16,7 @@ namespace TurnBasedBattle
         public int HealthPoint { get => healthPoint; set => healthPoint = value; }
         public int AttackPower { get => attackPower; set => attackPower = value; }
         public int AttackPowerMult { get => attackPowerMult; set => attackPowerMult = value; }
+        public int InnateDefense { get => innateDefense; set => innateDefense = value; }   
         public string Name => name;
 
         public void Attack(ICombatant combatant)
@@ -28,10 +30,8 @@ namespace TurnBasedBattle
 
         public void Guard(ICombatant combatant)
         {
-            HealthPoint -= (int)(combatant.AttackPower / 4);
+            HealthPoint -= (int)(combatant.AttackPower / InnateDefense);
             Console.WriteLine($"{name} guarded attack by {combatant.Name} and left {HealthPoint} HP");
         }
     }
-
-
 }

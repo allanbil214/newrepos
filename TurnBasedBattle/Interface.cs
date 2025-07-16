@@ -11,6 +11,7 @@ namespace TurnBasedBattle
         int HealthPoint { get; set; }
         int AttackPower { get; set; }
         int AttackPowerMult { get; set; }
+        int InnateDefense { get; set; }
         string Name { get; }
     }
     public interface IPlayer : ICombatant
