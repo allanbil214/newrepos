@@ -10,10 +10,17 @@ namespace TurnBasedBattle
         bool IsAlive { get; }
         int HealthPoint { get; set; }
         int AttackPower { get; set; }
+        int AttackPowerMult { get; set; }
         string Name { get; }
     }
     public interface IPlayer : ICombatant
     {
+        int Gold {get; set;}
         void Heal();
+    }
+
+    public interface IEnemy : ICombatant
+    {
+        void Loot();
     }
 }

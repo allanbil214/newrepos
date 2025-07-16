@@ -13,8 +13,8 @@ namespace TurnBasedBattle
 
         void Testing()
         {
-            Warrior player = new Warrior() {healthPoint = 100, attackPower = 7, name = "Warrior"};
-            Goblin enemy = new Goblin();
+            Player player = new Player() {healthPoint = 100, attackPower = 7, name = "Slayer", gold = 0};
+            Goblin enemy = new Goblin() {healthPoint = 100, attackPower = 7, name = "Goblin Rook", amount = 10};
 
             Console.WriteLine($"\n==== Welcome to Battler ====\n" +
                     $"Player ({player.Name}): HP({player.HealthPoint}), AP({player.AttackPower})\n" +
