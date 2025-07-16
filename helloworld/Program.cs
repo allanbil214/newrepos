@@ -2,9 +2,8 @@
 
 namespace NewRepos
 {
-    class Calc
+    class Hello
     {
-        int input1;
         static void Main(string[] args)
         {
             Console.WriteLine("hello");
