@@ -22,7 +22,7 @@ namespace TurnBasedBattle
         public int InnateDefense { get => innateDefense; set => innateDefense = value; }
         public string Name { get => name; set => name = value; }
 
-        public virtual void Attack(ICombatant target)
+        public void Attack(ICombatant target)
         {
             int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
 
@@ -43,6 +43,11 @@ namespace TurnBasedBattle
         {
             IsGuarding = true;
             Console.WriteLine($"{Name} raises their guard!");
+        }
+
+        public virtual void SpecialAttack(ICombatant target)
+        {
+            Console.WriteLine("Entity Special Attack!!");
         }
     }
 }

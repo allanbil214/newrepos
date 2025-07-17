@@ -124,17 +124,25 @@ namespace TurnBasedBattle
         BaseGoblin CreateRandomEnemy(Random rand)
         {
             string[] enemyNames = {"Goblin Rook", "Goblin Shaman", "Goblin Swordsman"};
+            int enemyIndex = rand.Next(enemyNames.Length);
             string enemyName = enemyNames[rand.Next(enemyNames.Length)];
             int[] enemyStats = enemyTypes[enemyName];
-            
-            return new BaseGoblin()
+
+            BaseGoblin selectedGoblin = enemyIndex switch
             {
-                Name = enemyName,
-                HealthPoint = enemyStats[(int)entityStats.HP],
-                AttackPower = enemyStats[(int)entityStats.AP],
-                InnateDefense = enemyStats[(int)entityStats.InnateDefense],
-                LootAmount = rand.Next(5, 21)
+                0 => new GoblinRook(),
+                1 => new GoblinShaman(),
+                2 => new GoblinSwordsman(),
+                _ => new GoblinRook()
             };
+
+            selectedGoblin.Name = enemyName;
+            selectedGoblin.HealthPoint = enemyStats[(int)entityStats.HP];
+            selectedGoblin.AttackPower = enemyStats[(int)entityStats.AP];
+            selectedGoblin.InnateDefense = enemyStats[(int)entityStats.InnateDefense];
+            selectedGoblin.LootAmount = rand.Next(5, 21);
+
+            return selectedGoblin;
         }
 
         BattleResult RunBattle(Player player, BaseGoblin enemy, int battleNumber)
@@ -184,7 +192,7 @@ namespace TurnBasedBattle
 		void EnemyTurn(BaseGoblin enemy, Player player)
 		{
             Console.WriteLine("It is the Enemy's Turn!");
-			if (enemy.HealthPoint < 30 && rand.Next(100) < 40)
+            if (enemy.HealthPoint < 30 && rand.Next(100) < 40)
             {
                 enemy.Guard();
                 Console.WriteLine($"{enemy.Name} takes a defensive stance!");
@@ -192,6 +200,10 @@ namespace TurnBasedBattle
             else if (rand.Next(100) < 80)
             {
                 enemy.Attack(player);
+            }
+            else if (rand.Next(100) < 20)
+            {
+                enemy.SpecialAttack(player);
             }
             else
             {

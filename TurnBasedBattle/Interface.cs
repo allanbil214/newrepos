@@ -6,6 +6,7 @@ namespace TurnBasedBattle
     {
         void Attack(ICombatant combatant);
         void Guard();
+        void SpecialAttack(ICombatant combatant);
 
         bool IsAlive { get; set; }
         bool IsGuarding { get; set; }
