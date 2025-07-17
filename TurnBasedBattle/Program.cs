@@ -13,13 +13,13 @@ namespace TurnBasedBattle
         {
             {"Warrior", [100, 7, 4]},
             {"Mage", [80, 10, 3]},
-            {"Assassin", [90, 15, 2]}
+            {"Assassin", [70, 15, 2]}
         };
         Dictionary<string, int[]> enemyTypes = new Dictionary<string, int[]>()
         {
             {"Goblin Rook", [100, 7, 4]},
             {"Goblin Shaman", [80, 10, 3]},
-            {"Goblin Swordsman", [90, 15, 2]}
+            {"Goblin Swordsman", [70, 15, 2]}
         };
 
         public static void Main(string[] args)
@@ -40,7 +40,7 @@ namespace TurnBasedBattle
         bool ShowStartScreen()
         {
             Console.WriteLine("\n==== Welcome to Battler ====\n== Start Screen ==\n[i] Select the option: \n[1] Start \n[2] Exit");
-            string selected = Console.ReadLine();
+            string selected = GetInput();
             
             if (selected == "1") return true;
             else if (selected == "2") Console.WriteLine("[i] Bye-bye!");
@@ -52,11 +52,11 @@ namespace TurnBasedBattle
         BasePlayer CreateCharacter()
         {
             Console.WriteLine("\n[=] Name Your Character!");
-            playerName = Console.ReadLine();
+            playerName = GetInput();
 
             ShowClasses();
             Console.WriteLine("\n[=] Select your Classes");
-            string selected = Console.ReadLine();
+            string selected = GetInput();
 
             BasePlayer player = ApplyClassStats(selected);
             Console.WriteLine($"Welcome {player.Name}! Your adventure begins now...\n");
@@ -227,7 +227,7 @@ namespace TurnBasedBattle
             Console.WriteLine("[3] Heal");
             Console.WriteLine("[4] Special Attack");
             Console.WriteLine("[5] Run Away");
-            return Console.ReadLine();
+            return GetInput();
         }
 
         void ProcessPlayerAction(BasePlayer player, BaseGoblin enemy, string action)
@@ -267,7 +267,7 @@ namespace TurnBasedBattle
             Console.WriteLine("[1] Continue fighting");
             Console.WriteLine("[2] Rest and quit");
             
-            string continueChoice = Console.ReadLine();
+            string continueChoice = GetInput();
             if (continueChoice == "2")
             {
                 Console.WriteLine($"\n{player.Name} decides to rest after {enemiesDefeated} battles.");
@@ -288,7 +288,7 @@ namespace TurnBasedBattle
             Console.WriteLine("[1] Fight another enemy");
             Console.WriteLine("[2] Quit game");
             
-            string runChoice = Console.ReadLine();
+            string runChoice = GetInput();
             if (runChoice == "2")
             {
                 Console.WriteLine($"\n{player.Name} decides to quit after {enemiesDefeated} battles.");
@@ -337,6 +337,19 @@ namespace TurnBasedBattle
             }
         }
 
+        string GetInput()
+        {
+            try
+            {
+                return Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex}");
+                return "";
+            }
+        }
+
         void Testing()
         {
             BasePlayer player = new BasePlayer() {HealthPoint = 100, AttackPower = 7, Name = "Slayer", Gold = 0};
@@ -350,4 +363,4 @@ namespace TurnBasedBattle
             Console.WriteLine($"Looks like Player attacked Enemy which dealt {player.AttackPower} and left the enemy HP to {enemy.HealthPoint}\n");
         }
     }
-}
+}   
