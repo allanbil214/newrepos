@@ -13,7 +13,9 @@ namespace TurnBasedBattle
         private string name = "Entity";
         private bool isAlive = true;
         private bool isGuarding = false;
+        private bool isSpecialed = false;
 
+        public bool IsSpecialed { get => isSpecialed; set => isSpecialed = value; }
         public bool IsGuarding { get => isGuarding; set => isGuarding = value; }
         public bool IsAlive { get => isAlive; set => isAlive = value; }
         public int HealthPoint { get => healthPoint; set => healthPoint = value; }
@@ -27,6 +29,7 @@ namespace TurnBasedBattle
             int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
 
             int defense = target.InnateDefense;
+            
             if (target.IsGuarding)
             {
                 defense += 3;
@@ -47,7 +50,12 @@ namespace TurnBasedBattle
 
         public virtual void SpecialAttack(ICombatant target)
         {
-            Console.WriteLine("Entity Special Attack!!");
+            if (!IsSpecialed)
+            {
+                Console.WriteLine("Entity Special Attack!!");
+                IsSpecialed = true;
+            }
+
         }
     }
 }

@@ -18,21 +18,30 @@ namespace TurnBasedBattle
         Random rand = new Random();
         public override void SpecialAttack(ICombatant target)
         {
-            Console.WriteLine($"{Name} is using Special Attack: Berserker Attack at {target.Name}");
-
-            int actualAP = rand.Next(AttackPower * 2, (int)(AttackPower * AttackPowerMult));
-
-            int defense = target.InnateDefense;
-            if (target.IsGuarding)
+            if (!IsSpecialed)
             {
-                defense += 1;
-                Console.WriteLine($"{target.Name} blocks some of the special attack! But rather ineffectively.");
-                target.IsGuarding = false;
-            }
+                Console.WriteLine($"{Name} is using Special Attack: Berserker Attack at {target.Name}");
 
-            int damage = Math.Max(1, actualAP - defense);
-            target.HealthPoint -= damage;
-            Console.WriteLine($"{Name} attacked angrily at {target.Name} and dealth {damage} Damage");
+                int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
+
+                int defense = target.InnateDefense;
+                if (target.IsGuarding)
+                {
+                    defense += 1;
+                    Console.WriteLine($"{target.Name} blocks some of the special attack! But rather ineffectively.");
+                    target.IsGuarding = false;
+                }
+
+                int damage = Math.Max(1, actualAP * 2 - defense);
+                target.HealthPoint -= damage;
+                Console.WriteLine($"{Name} attacked angrily at {target.Name} and dealth {damage} Damage");
+
+                IsSpecialed = true;
+            }
+            else
+            {
+                Console.WriteLine("Special Attack is already used up!");
+            }
         }
     }
     public class GoblinShaman : BaseGoblin
@@ -40,21 +49,30 @@ namespace TurnBasedBattle
         Random rand = new Random();
         public override void SpecialAttack(ICombatant target)
         {
-            Console.WriteLine($"{Name} is using Special Attack: Beam Magic at {target.Name}");
-
-            int actualAP = rand.Next(AttackPower * 2, (int)(AttackPower * AttackPowerMult));
-
-            int defense = target.InnateDefense;
-            if (target.IsGuarding)
+            if (!IsSpecialed)
             {
-                defense -= 3;
-                Console.WriteLine($"{target.Name} is guard broken, and can't block effectively.");
-                target.IsGuarding = false;
-            }
+                Console.WriteLine($"{Name} is using Special Attack: Beam Magic at {target.Name}");
 
-            int damage = Math.Max(1, actualAP - defense);
-            target.HealthPoint -= damage;
-            Console.WriteLine($"{Name} beamed at {target.Name} and dealth {damage} Damage");
+                int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
+
+                int defense = target.InnateDefense;
+                if (target.IsGuarding)
+                {
+                    defense -= 3;
+                    Console.WriteLine($"{target.Name} is guard broken, and can't block effectively.");
+                    target.IsGuarding = false;
+                }
+
+                int damage = Math.Max(1, actualAP * 2 - defense);
+                target.HealthPoint -= damage;
+                Console.WriteLine($"{Name} beamed at {target.Name} and dealth {damage} Damage");
+
+                IsSpecialed = true;
+            }
+            else
+            {
+                Console.WriteLine("Special Attack is already used up!");
+            }
         }
     }
 
@@ -63,27 +81,36 @@ namespace TurnBasedBattle
         Random rand = new Random();
         public override void SpecialAttack(ICombatant target)
         {
-            Console.WriteLine($"{Name} is using Special Attack: Double Slash at {target.Name}");
-
-            int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
-
-            int defense = target.InnateDefense;
-            if (target.IsGuarding)
+            if (!IsSpecialed)
             {
-                defense += 3;
-                Console.WriteLine($"{target.Name} blocks some of the attack.");
-                target.IsGuarding = false;
+                Console.WriteLine($"{Name} is using Special Attack: Double Slash at {target.Name}");
+
+                int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
+
+                int defense = target.InnateDefense;
+                if (target.IsGuarding)
+                {
+                    defense += 3;
+                    Console.WriteLine($"{target.Name} blocks some of the attack.");
+                    target.IsGuarding = false;
+                }
+
+                int firstHit = Math.Max(1, actualAP - defense);
+                target.HealthPoint -= firstHit;
+                Console.WriteLine($"{Name} attacked the first slash at {target.Name} and dealth {firstHit} Damage");
+                
+                if (rand.Next(100) < 25)
+                {
+                    int secondHit = Math.Max(1, actualAP - defense);
+                    target.HealthPoint -= (int)(secondHit/2);
+                    Console.WriteLine($"{Name} attacked the first slash at {target.Name} and dealth {secondHit} Damage");
+                }
+
+                IsSpecialed = true;
             }
-
-            int firstHit = Math.Max(1, actualAP - defense);
-            target.HealthPoint -= firstHit;
-            Console.WriteLine($"{Name} attacked the first slash at {target.Name} and dealth {firstHit} Damage");
-            
-            if (rand.Next(100) < 25)
+            else
             {
-                int secondHit = Math.Max(1, actualAP - defense);
-                target.HealthPoint -= (int)(secondHit/2);
-                Console.WriteLine($"{Name} attacked the first slash at {target.Name} and dealth {secondHit} Damage");
+                Console.WriteLine("Special Attack is already used up!");
             }
         }
     }

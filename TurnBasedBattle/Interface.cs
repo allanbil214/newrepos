@@ -8,6 +8,7 @@ namespace TurnBasedBattle
         void Guard();
         void SpecialAttack(ICombatant combatant);
 
+        bool IsSpecialed { get; set; }
         bool IsAlive { get; set; }
         bool IsGuarding { get; set; }
         int HealthPoint { get; set; }

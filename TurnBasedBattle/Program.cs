@@ -30,10 +30,9 @@ namespace TurnBasedBattle
 
         void GameInit()
         {
-            Player player = new Player();
             if (ShowStartScreen())
             {
-                CreateCharacter(player);
+                BasePlayer player = CreateCharacter();
                 RunGameLoop(player);
             }
         }
@@ -50,48 +49,58 @@ namespace TurnBasedBattle
             return false;
         }
 
-        void CreateCharacter(Player player)
+        BasePlayer CreateCharacter()
         {
             Console.WriteLine("\n[=] Name Your Character!");
             playerName = Console.ReadLine();
-            player.Name = playerName;
-            
+
             ShowClasses();
             Console.WriteLine("\n[=] Select your Classes");
             string selected = Console.ReadLine();
-            
-            ApplyClassStats(player, selected);
+
+            BasePlayer player = ApplyClassStats(selected);
             Console.WriteLine($"Welcome {player.Name}! Your adventure begins now...\n");
+            return player;
         }
 
-        void ApplyClassStats(Player player, string classChoice)
+        BasePlayer ApplyClassStats(string classChoice)
         {
+            BasePlayer player;
+            int[] stats;
+            
             switch (classChoice)
             {
                 case "1":
-                    selectedClass = playerClasses["Warrior"];
+                    player = new Warrior();
+                    stats = playerClasses["Warrior"];
                     Console.WriteLine("[i] You Selected Warrior \n");
                     break;
                 case "2":
-                    selectedClass = playerClasses["Mage"];
+                    player = new Mage();
+                    stats = playerClasses["Mage"];
                     Console.WriteLine("[i] You Selected Mage \n");
                     break;
                 case "3":
-                    selectedClass = playerClasses["Assassin"];
+                    player = new Assassin();
+                    stats = playerClasses["Assassin"];
                     Console.WriteLine("[i] You Selected Assassin \n");
                     break;
                 default:
                     Console.WriteLine("[!] Invalid class selection, defaulting to Warrior");
-                    selectedClass = playerClasses["Warrior"];
+                    player = new Warrior();
+                    stats = playerClasses["Warrior"];
                     break;
             }
             
-            player.HealthPoint = selectedClass[(int)entityStats.HP];
-            player.AttackPower = selectedClass[(int)entityStats.AP];
-            player.InnateDefense = selectedClass[(int)entityStats.InnateDefense];
+            player.HealthPoint = stats[(int)entityStats.HP];
+            player.AttackPower = stats[(int)entityStats.AP];
+            player.InnateDefense = stats[(int)entityStats.InnateDefense];
+            player.Name = playerName;
+            
+            return player;
         }
 
-        void RunGameLoop(Player player)
+        void RunGameLoop(BasePlayer player)
         {
             Random rand = new Random();
             int enemiesDefeated = 0;
@@ -124,15 +133,14 @@ namespace TurnBasedBattle
         BaseGoblin CreateRandomEnemy(Random rand)
         {
             string[] enemyNames = {"Goblin Rook", "Goblin Shaman", "Goblin Swordsman"};
-            int enemyIndex = rand.Next(enemyNames.Length);
             string enemyName = enemyNames[rand.Next(enemyNames.Length)];
             int[] enemyStats = enemyTypes[enemyName];
 
-            BaseGoblin selectedGoblin = enemyIndex switch
+            BaseGoblin selectedGoblin = enemyName switch
             {
-                0 => new GoblinRook(),
-                1 => new GoblinShaman(),
-                2 => new GoblinSwordsman(),
+                "Goblin Rook" => new GoblinRook(),
+                "Goblin Shaman" => new GoblinShaman(),
+                "Goblin Swordsman" => new GoblinSwordsman(),
                 _ => new GoblinRook()
             };
 
@@ -145,7 +153,7 @@ namespace TurnBasedBattle
             return selectedGoblin;
         }
 
-        BattleResult RunBattle(Player player, BaseGoblin enemy, int battleNumber)
+        BattleResult RunBattle(BasePlayer player, BaseGoblin enemy, int battleNumber)
         {
             Console.WriteLine($"\n==== BATTLE {battleNumber + 1} ====");
             Console.WriteLine($"A wild {enemy.Name} appears!");
@@ -156,7 +164,7 @@ namespace TurnBasedBattle
             {
                 string action = GetPlayerAction();
                 
-                if (action == "4") 
+                if (action == "5") 
                 {
                     Console.WriteLine($"{player.Name} ran away from the battle!");
                     return new BattleResult { PlayerRanAway = true };
@@ -189,7 +197,7 @@ namespace TurnBasedBattle
             return new BattleResult { PlayerWon = player.IsAlive };
         }
         
-		void EnemyTurn(BaseGoblin enemy, Player player)
+		void EnemyTurn(BaseGoblin enemy, BasePlayer player)
 		{
             Console.WriteLine("It is the Enemy's Turn!");
             if (enemy.HealthPoint < 30 && rand.Next(100) < 40)
@@ -217,11 +225,12 @@ namespace TurnBasedBattle
             Console.WriteLine("[1] Attack");
             Console.WriteLine("[2] Guard");
             Console.WriteLine("[3] Heal");
-            Console.WriteLine("[4] Run Away");
+            Console.WriteLine("[4] Special Attack");
+            Console.WriteLine("[5] Run Away");
             return Console.ReadLine();
         }
 
-        void ProcessPlayerAction(Player player, BaseGoblin enemy, string action)
+        void ProcessPlayerAction(BasePlayer player, BaseGoblin enemy, string action)
         {
             switch (action)
             {
@@ -234,13 +243,16 @@ namespace TurnBasedBattle
                 case "3":
                     player.Heal();
                     break;
+                case "4":
+                    player.SpecialAttack(enemy);
+                    break;
                 default:
                     Console.WriteLine("[!] Invalid action! You hesitate...");
                     break;
             }
         }
 
-        void ShowBattleStatus(Player player, BaseGoblin enemy)
+        void ShowBattleStatus(BasePlayer player, BaseGoblin enemy)
         {
             if (player.IsAlive && enemy.IsAlive)
             {
@@ -248,7 +260,7 @@ namespace TurnBasedBattle
             }
         }
 
-        bool AskContinue(Player player, int enemiesDefeated)
+        bool AskContinue(BasePlayer player, int enemiesDefeated)
         {
             Console.WriteLine($"\nBattles won: {enemiesDefeated}");
             Console.WriteLine("Do you want to continue your adventure?");
@@ -270,7 +282,7 @@ namespace TurnBasedBattle
             return true;
         }
 
-        bool AskRetry(Player player, int enemiesDefeated)
+        bool AskRetry(BasePlayer player, int enemiesDefeated)
         {
             Console.WriteLine("Do you want to try fighting again?");
             Console.WriteLine("[1] Fight another enemy");
@@ -287,7 +299,7 @@ namespace TurnBasedBattle
             return true;
         }
 
-        void ShowGameOverScreen(Player player, int enemiesDefeated)
+        void ShowGameOverScreen(BasePlayer player, int enemiesDefeated)
         {
             if (!player.IsAlive)
             {
@@ -327,7 +339,7 @@ namespace TurnBasedBattle
 
         void Testing()
         {
-            Player player = new Player() {HealthPoint = 100, AttackPower = 7, Name = "Slayer", Gold = 0};
+            BasePlayer player = new BasePlayer() {HealthPoint = 100, AttackPower = 7, Name = "Slayer", Gold = 0};
             BaseGoblin enemy = new BaseGoblin() {HealthPoint = 100, AttackPower = 7, Name = "Goblin Rook", LootAmount = 10};
 
             Console.WriteLine($"\n==== Welcome to Battler ====\n" +
