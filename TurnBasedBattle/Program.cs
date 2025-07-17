@@ -165,15 +165,6 @@ namespace TurnBasedBattle
                 
                 if (enemy.IsAlive)
                 {
-                    // if (action == "2")
-                    // {
-                    //     player.Guard();
-                    // }
-                    // else
-                    // {
-                    //     EnemyTurn(enemy, player);
-                    // }
-                    
                     EnemyTurn(enemy, player);
 
                     if (player.HealthPoint <= 0)
