@@ -2,36 +2,47 @@ using System;
 
 namespace TurnBasedBattle
 {
+
     public class Entity : ICombatant
     {
+        Random rand = new Random();
+        private int healthPoint = 50;
+        private int attackPower = 3;
+        private int attackPowerMult = 1;
+        private int innateDefense = 1;
+        private string name = "Entity";
+        private bool isAlive = true;
+        private bool isGuarding = false;
 
-        public int healthPoint = 50;
-        public int attackPower = 3;
-        public int attackPowerMult = 1;
-        public int innateDefense = 1;
-        public string name = "Entity";
-        public bool isAlive = true;
-
-        public bool IsAlive => isAlive;
+        public bool IsGuarding { get => isGuarding; set => isGuarding = value; }
+        public bool IsAlive { get => isAlive; set => isAlive = value; }
         public int HealthPoint { get => healthPoint; set => healthPoint = value; }
         public int AttackPower { get => attackPower; set => attackPower = value; }
         public int AttackPowerMult { get => attackPowerMult; set => attackPowerMult = value; }
-        public int InnateDefense { get => innateDefense; set => innateDefense = value; }   
-        public string Name => name;
+        public int InnateDefense { get => innateDefense; set => innateDefense = value; }
+        public string Name { get => name; set => name = value; }
 
-        public void Attack(ICombatant combatant)
+        public virtual void Attack(ICombatant target)
         {
-            Random rand = new Random();
-            int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));        
+            int actualAP = rand.Next(AttackPower, (int)(AttackPower * AttackPowerMult));
 
-            combatant.HealthPoint -= actualAP;
-            Console.WriteLine($"{name} attacked {combatant.Name} and dealth {actualAP} Damage");
+            int defense = target.InnateDefense;
+            if (target.IsGuarding)
+            {
+                defense += 3;
+                Console.WriteLine($"{target.Name} blocks some of the attack!");
+                target.IsGuarding = false;
+            }
+
+            int damage = Math.Max(1, actualAP - defense);
+            target.HealthPoint -= damage;
+            Console.WriteLine($"{Name} attacked {target.Name} and dealth {damage} Damage");
         }
 
-        public void Guard(ICombatant combatant)
+        public void Guard()
         {
-            HealthPoint -= (int)(combatant.AttackPower / InnateDefense);
-            Console.WriteLine($"{name} guarded attack by {combatant.Name} and left {HealthPoint} HP");
+            IsGuarding = true;
+            Console.WriteLine($"{Name} raises their guard!");
         }
     }
 }

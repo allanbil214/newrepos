@@ -5,9 +5,10 @@ namespace TurnBasedBattle
     public interface ICombatant
     {
         void Attack(ICombatant combatant);
-        void Guard(ICombatant combatant);
+        void Guard();
 
-        bool IsAlive { get; }
+        bool IsAlive { get; set; }
+        bool IsGuarding { get; set; }
         int HealthPoint { get; set; }
         int AttackPower { get; set; }
         int AttackPowerMult { get; set; }
@@ -22,6 +23,6 @@ namespace TurnBasedBattle
 
     public interface IEnemy : ICombatant
     {
-        void Loot();
+        void Loot(IPlayer player);
     }
 }
