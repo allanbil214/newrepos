@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurnBasedBattle", "TurnBase
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "checkEvenNumber", "checkEvenNumber\checkEvenNumber.csproj", "{E9C10D27-CE26-4AF1-8038-275C3CC4E860}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp", "TodoApp\TodoApp.csproj", "{FB790DB6-02C9-43C8-892C-A4ABF6491F65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{E9C10D27-CE26-4AF1-8038-275C3CC4E860}.Release|x64.Build.0 = Release|Any CPU
 		{E9C10D27-CE26-4AF1-8038-275C3CC4E860}.Release|x86.ActiveCfg = Release|Any CPU
 		{E9C10D27-CE26-4AF1-8038-275C3CC4E860}.Release|x86.Build.0 = Release|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Debug|x64.Build.0 = Debug|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Debug|x86.Build.0 = Debug|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Release|x64.ActiveCfg = Release|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Release|x64.Build.0 = Release|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB790DB6-02C9-43C8-892C-A4ABF6491F65}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
