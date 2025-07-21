@@ -10,11 +10,11 @@
             // Console.WriteLine(test + "anu");
 
             InputMaxLimit();
-            Foobar(); // + AddJazz
+            // Foobar(); // + AddJazz
+            // Console.WriteLine("\n");
             
-            Console.WriteLine("\n");
             // versus?
-            FooBarJazz();
+            FooBarJazz(); // me personally prefer this :thinking_emoji
 
             Console.WriteLine("\n");
         }
