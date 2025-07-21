@@ -18,7 +18,7 @@
         static void InputMaxLimit()
         {
             Console.WriteLine("\n[=] Input The Maximum Limit: ");
-            if (!int.TryParse(Console.ReadLine(), out maxLimit) || maxLimit < 0)
+            if (!int.TryParse(Console.ReadLine(), out maxLimit) || maxLimit <= 0)
             {
                 maxLimit = 105;
                 Console.WriteLine("[i] Defaulted to 105. \n");
