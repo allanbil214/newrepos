@@ -10,7 +10,11 @@
             // Console.WriteLine(test + "anu");
 
             InputMaxLimit();
-            Foobar();
+            Foobar(); // + AddJazz
+            
+            Console.WriteLine("\n");
+            // versus?
+            FooBarJazz();
 
             Console.WriteLine("\n");
         }
@@ -27,6 +31,7 @@
 
         static void Foobar()
         {
+            output = "";
             for (int i = 1; i <= maxLimit; i++)
             {
                 if (i % 3 == 0 & i % 5 == 0) Console.Write(output = "foobar" + AddJazz(i));
@@ -37,6 +42,30 @@
 
                 if (i != maxLimit) Console.Write(", ");
             }
+        }
+
+        static void FooBarJazz()
+        {
+            output = "";
+            for (int i = 1; i <= maxLimit; i++)
+            {
+                if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) Console.Write(i);
+                else Console.Write(output + AddFoo(i) + AddBar(i) + AddJazz(i));
+
+                if (i != maxLimit) Console.Write(", ");
+            }
+        }
+
+        static string AddFoo(int input)
+        {
+            if (input % 3 == 0) return "foo";
+            else return "";
+        }
+
+        static string AddBar(int input)
+        {
+            if (input % 5 == 0) return "bar";
+            else return "";
         }
 
         static string AddJazz(int input)
