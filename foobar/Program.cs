@@ -40,14 +40,8 @@
 
         static string AddJazz(int input)
         {
-            if (input % 7 == 0)
-            {
-                return "jazz";
-            }
-            else
-            {
-                return "";
-            }
+            if (input % 7 == 0) return "jazz";
+            else return "";
         }
     }
 }
