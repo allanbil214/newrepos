@@ -12,9 +12,9 @@
             InputMaxLimit();
             // Foobar(); // + AddJazz
             // Console.WriteLine("\n");
-            
+
             // versus?
-            FooBarJazz(); // me personally prefer this :thinking_emoji
+            FooBarJazz();
 
             Console.WriteLine("\n");
         }
