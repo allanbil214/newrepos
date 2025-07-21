@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingEvents", "TestingEve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingDelegates", "TestingDelegates\TestingDelegates.csproj", "{5DA02BE3-FDDA-440D-A515-5BA3ACFD52AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingOverloadingOperator", "TestingOverloadingOperator\TestingOverloadingOperator.csproj", "{FAC07C87-6A40-485D-B527-55D600C793FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,18 @@ Global
 		{5DA02BE3-FDDA-440D-A515-5BA3ACFD52AB}.Release|x64.Build.0 = Release|Any CPU
 		{5DA02BE3-FDDA-440D-A515-5BA3ACFD52AB}.Release|x86.ActiveCfg = Release|Any CPU
 		{5DA02BE3-FDDA-440D-A515-5BA3ACFD52AB}.Release|x86.Build.0 = Release|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Debug|x64.Build.0 = Debug|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Debug|x86.Build.0 = Debug|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Release|x64.ActiveCfg = Release|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Release|x64.Build.0 = Release|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Release|x86.ActiveCfg = Release|Any CPU
+		{FAC07C87-6A40-485D-B527-55D600C793FA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
