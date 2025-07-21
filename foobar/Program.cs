@@ -32,6 +32,7 @@
                 if (i % 3 == 0 & i % 5 == 0) Console.Write(output = "foobar" + AddJazz(i));
                 else if (i % 3 == 0) Console.Write(output = "foo" + AddJazz(i));
                 else if (i % 5 == 0) Console.Write(output = "bar" + AddJazz(i));
+                else if (i % 7 == 0) Console.Write(AddJazz(i));
                 else Console.Write(i);
 
                 if (i != maxLimit) Console.Write(", ");
