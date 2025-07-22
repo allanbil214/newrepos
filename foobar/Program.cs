@@ -1,4 +1,7 @@
-﻿namespace Foobar
+﻿using System.Diagnostics;
+using System.Text;
+
+namespace Foobar
 {
     public class Program
     {
@@ -14,8 +17,23 @@
             // Console.WriteLine("\n");
 
             // versus?
-            FooBarJazz();
+            // FooBarJazz();
 
+            FooBarJazzStringBuider();
+
+            // Measure the method's time to run
+            // Time(() => Foobar());
+            // Console.WriteLine("\n");
+            // Time(() => FooBarJazz());
+            // Console.WriteLine("\n");
+            // Time(() => FooBarJazzStringBuider());
+
+            // When i input 1000, 
+            // the Stringbuilder only took 6ms (more or less) [Duration:00:00.065536]
+            // compared to the non which took 9ms [Duration:00:00.098299]
+            // while compared to the OG which took even more around 15ms. [Duration:00:00.155038]
+
+            // in conclusion StringBuilder is indeed better.
             Console.WriteLine("\n");
         }
 
@@ -29,7 +47,7 @@
             }
         }
 
-        static void Foobar()
+        static void Foobar() // The OG but with added AddJazz
         {
             output = "";
             for (int i = 1; i <= maxLimit; i++)
@@ -44,7 +62,7 @@
             }
         }
 
-        static void FooBarJazz()
+        static void FooBarJazz() // New Method without SB
         {
             output = "";
             for (int i = 1; i <= maxLimit; i++)
@@ -52,8 +70,33 @@
                 if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) Console.Write(i);
                 else Console.Write(output + AddFoo(i) + AddBar(i) + AddJazz(i));
 
-                if (i != maxLimit) Console.Write(", ");
+                Console.Write(AddComma(i, maxLimit));
             }
+        }
+
+        static void FooBarJazzStringBuider()
+        {
+            StringBuilder sb = new StringBuilder("");
+
+            for (int i = 1; i <= maxLimit; i++)
+            {
+                sb.Clear();
+                if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) sb.Append(i);
+                else
+                {
+                    sb.Append(AddFoo(i));
+                    sb.Append(AddBar(i));
+                    sb.Append(AddJazz(i));
+                }
+                sb.Append(AddComma(i, maxLimit));
+                Console.Write(sb.ToString());
+            }
+        }
+
+        static string AddComma(int current, int max)
+        {
+            if (current != maxLimit) return ", ";
+            else return "";
         }
 
         static string AddFoo(int input)
@@ -72,6 +115,15 @@
         {
             if (input % 7 == 0) return "jazz";
             else return "";
+        }
+
+        public static void Time(Action action)
+        {
+            Stopwatch st = new Stopwatch();
+            st.Start();
+            action();
+            st.Stop();
+            Console.WriteLine("\nDuration:" + st.Elapsed.ToString("mm\\:ss\\.ffffff"));
         }
     }
 }
