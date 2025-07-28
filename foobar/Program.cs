@@ -9,17 +9,80 @@ namespace Foobar
         static string output = "";
         public static void Main()
         {
+            InputMaxLimit();
+
+            NewFoobar();
+
+            Console.WriteLine("\n");
+        }
+
+        static void InputMaxLimit()
+        {
+            Console.WriteLine("\n[=] Input The Maximum Limit: ");
+            if (!int.TryParse(Console.ReadLine(), out maxLimit) || maxLimit <= 0)
+            {
+                maxLimit = 105;
+                Console.WriteLine("[i] Defaulted to 105. \n");
+            }
+        }
+
+        public static void Time(Action action)
+        {
+            Stopwatch st = new Stopwatch();
+            st.Start();
+            action();
+            st.Stop();
+            Console.WriteLine("\nDuration:" + st.Elapsed.ToString("mm\\:ss\\.ffffff"));
+        }
+
+        static void NewFoobar()
+            {
+                var foobarbazjazzhuzz = new Dictionary<int, string>
+                {
+                    { 3, "Foo" },
+                    { 4, "Bar" }, 
+                    { 5, "Baz" },
+                    { 7, "Jazz" },
+                    { 9, "Huzz" }
+                };
+                StringBuilder sb = new();
+                
+                for (int i = 1; i <= maxLimit; i++)
+                {
+                    sb.Clear();
+                    foreach (var d in foobarbazjazzhuzz)
+                    {
+                        if (i % d.Key == 0)
+                        {
+                            sb.Append(d.Value);
+                        }
+                    }
+                    
+                    string result = sb.Length > 0 ? sb.ToString() : i.ToString();
+                    Console.Write($"{result}{AddComma(i, maxLimit)} ");
+                }
+            }
+
+        static string AddComma(int current, int max)
+        {
+            if (current != maxLimit) return ",";
+            else return "";
+        }
+
+        // not used, legacy code
+        public static void NotMain()
+        {
             // string test = "asd";
             // Console.WriteLine(test + "anu");
 
-            InputMaxLimit();
+            // InputMaxLimit();
             // Foobar(); // + AddJazz
             // Console.WriteLine("\n");
 
             // versus?
             // FooBarJazz();
 
-            FooBarJazzStringBuider();
+            // FooBarJazzStringBuider();
 
             // Measure the method's time to run
             // Time(() => Foobar());
@@ -34,17 +97,44 @@ namespace Foobar
             // while compared to the OG which took even more around 15ms. [Duration:00:00.155038]
 
             // in conclusion StringBuilder is indeed better.
-            Console.WriteLine("\n");
+            // Console.WriteLine("\n");
         }
 
-        static void InputMaxLimit()
+        static void FooBarJazzStringBuider()
         {
-            Console.WriteLine("\n[=] Input The Maximum Limit: ");
-            if (!int.TryParse(Console.ReadLine(), out maxLimit) || maxLimit <= 0)
+            StringBuilder sb = new StringBuilder("");
+
+            for (int i = 1; i <= maxLimit; i++)
             {
-                maxLimit = 105;
-                Console.WriteLine("[i] Defaulted to 105. \n");
+                sb.Clear();
+                if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) sb.Append(i);
+                else
+                {
+                    sb.Append(AddFoo(i));
+                    sb.Append(AddBar(i));
+                    sb.Append(AddJazz(i));
+                }
+                sb.Append(AddComma(i, maxLimit));
+                Console.Write(sb.ToString());
             }
+        }
+
+        static string AddFoo(int input)
+        {
+            if (input % 3 == 0) return "foo";
+            else return "";
+        }
+
+        static string AddBar(int input)
+        {
+            if (input % 5 == 0) return "bar";
+            else return "";
+        }
+
+        static string AddJazz(int input)
+        {
+            if (input % 7 == 0) return "jazz";
+            else return "";
         }
 
         static void Foobar() // The OG but with added AddJazz
@@ -72,58 +162,6 @@ namespace Foobar
 
                 Console.Write(AddComma(i, maxLimit));
             }
-        }
-
-        static void FooBarJazzStringBuider()
-        {
-            StringBuilder sb = new StringBuilder("");
-
-            for (int i = 1; i <= maxLimit; i++)
-            {
-                sb.Clear();
-                if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) sb.Append(i);
-                else
-                {
-                    sb.Append(AddFoo(i));
-                    sb.Append(AddBar(i));
-                    sb.Append(AddJazz(i));
-                }
-                sb.Append(AddComma(i, maxLimit));
-                Console.Write(sb.ToString());
-            }
-        }
-
-        static string AddComma(int current, int max)
-        {
-            if (current != maxLimit) return ", ";
-            else return "";
-        }
-
-        static string AddFoo(int input)
-        {
-            if (input % 3 == 0) return "foo";
-            else return "";
-        }
-
-        static string AddBar(int input)
-        {
-            if (input % 5 == 0) return "bar";
-            else return "";
-        }
-
-        static string AddJazz(int input)
-        {
-            if (input % 7 == 0) return "jazz";
-            else return "";
-        }
-
-        public static void Time(Action action)
-        {
-            Stopwatch st = new Stopwatch();
-            st.Start();
-            action();
-            st.Stop();
-            Console.WriteLine("\nDuration:" + st.Elapsed.ToString("mm\\:ss\\.ffffff"));
         }
     }
 }
