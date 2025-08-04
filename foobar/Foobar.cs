@@ -39,7 +39,7 @@ namespace Foobar
             }
         }
 
-        static string AddPunctuation(int current, int max)
+        string AddPunctuation(int current, int max)
         {
             if (current != max) return ",";
             else if (current == max) return ".";
