@@ -6,14 +6,60 @@ namespace Foobar
     public class Program
     {
         static int maxLimit = 0;
-        static string output = "";
+        static int ruleNumber = 0;
+        static string ruleOutput = "";
+        static FooBarBuilder fb = new FooBarBuilder();
+
         public static void Main()
         {
             InputMaxLimit();
+            HowManyRules();
 
-            NewFoobar();
+            // Console.WriteLine(ruleNumber.ToString());
+            // Console.WriteLine(ruleOutput);
+
+            fb.NewFoobar(maxLimit);
 
             Console.WriteLine("\n");
+        }
+
+        static void HowManyRules()
+        {
+            int howMany;
+            while (true)
+            {
+                Console.WriteLine("\n[=] How many new rules do you want?");
+                if (int.TryParse(Console.ReadLine(), out howMany) && howMany > 0) break;
+                Console.WriteLine("[i] Womp womp, empty or less than 0 number.");
+            }
+
+            for (int i = 0; i < howMany; i++)
+            {
+                Console.WriteLine($"\n[i] Adding new rule number {i+1}.");
+                InputNewRules();
+            }
+        }
+
+        static void InputNewRules()
+        {
+            while (true)
+            {
+                Console.WriteLine("\n[=] Input The Number: ");
+
+                if (int.TryParse(Console.ReadLine(), out ruleNumber) && ruleNumber > 0) break;
+                Console.WriteLine("[i] Womp womp, empty or less than 0 number.");
+            }
+
+            while (true)
+            {
+                Console.WriteLine("\n[=] Input The Output: ");
+                ruleOutput = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(ruleOutput)) break;
+                Console.WriteLine("\n[!] Womp womp, empty string.");
+            }
+            
+            fb.AddRule(ruleNumber, ruleOutput);
         }
 
         static void InputMaxLimit()
@@ -26,142 +72,5 @@ namespace Foobar
             }
         }
 
-        public static void Time(Action action)
-        {
-            Stopwatch st = new Stopwatch();
-            st.Start();
-            action();
-            st.Stop();
-            Console.WriteLine("\nDuration:" + st.Elapsed.ToString("mm\\:ss\\.ffffff"));
-        }
-
-        static void NewFoobar()
-            {
-                var foobarbazjazzhuzz = new Dictionary<int, string>
-                {
-                    { 3, "Foo" },
-                    { 4, "Bar" }, 
-                    { 5, "Baz" },
-                    { 7, "Jazz" },
-                    { 9, "Huzz" }
-                };
-                StringBuilder sb = new();
-                
-                for (int i = 1; i <= maxLimit; i++)
-                {
-                    sb.Clear();
-                    foreach (var d in foobarbazjazzhuzz)
-                    {
-                        if (i % d.Key == 0)
-                        {
-                            sb.Append(d.Value);
-                        }
-                    }
-                    
-                    string result = sb.Length > 0 ? sb.ToString() : i.ToString();
-                    Console.Write($"{result}{AddComma(i, maxLimit)} ");
-                }
-            }
-
-        static string AddComma(int current, int max)
-        {
-            if (current != maxLimit) return ",";
-            else return "";
-        }
-
-        // not used, legacy code
-        public static void NotMain()
-        {
-            // string test = "asd";
-            // Console.WriteLine(test + "anu");
-
-            // InputMaxLimit();
-            // Foobar(); // + AddJazz
-            // Console.WriteLine("\n");
-
-            // versus?
-            // FooBarJazz();
-
-            // FooBarJazzStringBuider();
-
-            // Measure the method's time to run
-            // Time(() => Foobar());
-            // Console.WriteLine("\n");
-            // Time(() => FooBarJazz());
-            // Console.WriteLine("\n");
-            // Time(() => FooBarJazzStringBuider());
-
-            // When i input 1000, 
-            // the Stringbuilder only took 6ms (more or less) [Duration:00:00.065536]
-            // compared to the non which took 9ms [Duration:00:00.098299]
-            // while compared to the OG which took even more around 15ms. [Duration:00:00.155038]
-
-            // in conclusion StringBuilder is indeed better.
-            // Console.WriteLine("\n");
-        }
-
-        static void FooBarJazzStringBuider()
-        {
-            StringBuilder sb = new StringBuilder("");
-
-            for (int i = 1; i <= maxLimit; i++)
-            {
-                sb.Clear();
-                if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) sb.Append(i);
-                else
-                {
-                    sb.Append(AddFoo(i));
-                    sb.Append(AddBar(i));
-                    sb.Append(AddJazz(i));
-                }
-                sb.Append(AddComma(i, maxLimit));
-                Console.Write(sb.ToString());
-            }
-        }
-
-        static string AddFoo(int input)
-        {
-            if (input % 3 == 0) return "foo";
-            else return "";
-        }
-
-        static string AddBar(int input)
-        {
-            if (input % 5 == 0) return "bar";
-            else return "";
-        }
-
-        static string AddJazz(int input)
-        {
-            if (input % 7 == 0) return "jazz";
-            else return "";
-        }
-
-        static void Foobar() // The OG but with added AddJazz
-        {
-            output = "";
-            for (int i = 1; i <= maxLimit; i++)
-            {
-                if (i % 3 == 0 & i % 5 == 0) Console.Write(output = "foobar" + AddJazz(i));
-                else if (i % 3 == 0) Console.Write(output = "foo" + AddJazz(i));
-                else if (i % 5 == 0) Console.Write(output = "bar" + AddJazz(i));
-                else if (i % 7 == 0) Console.Write(AddJazz(i));
-                else Console.Write(i);
-
-                if (i != maxLimit) Console.Write(", ");
-            }
-        }
-
-        static void FooBarJazz() // New Method without SB
-        {
-            output = "";
-            for (int i = 1; i <= maxLimit; i++)
-            {
-                if (i % 3 != 0 & i % 5 != 0 & i % 7 != 0) Console.Write(i);
-                else Console.Write(output + AddFoo(i) + AddBar(i) + AddJazz(i));
-
-                Console.Write(AddComma(i, maxLimit));
-            }
-        }
     }
 }
