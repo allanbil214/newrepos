@@ -58,7 +58,7 @@ namespace Foobar
                 if (!string.IsNullOrEmpty(ruleOutput)) break;
                 Console.WriteLine("\n[!] Womp womp, empty string.");
             }
-            
+
             fb.AddRule(ruleNumber, ruleOutput);
         }
 

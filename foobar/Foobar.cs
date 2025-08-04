@@ -4,7 +4,7 @@ namespace Foobar
 {
     public class FooBarBuilder
     {
-        Dictionary<int, string> rules = new Dictionary<int, string>
+        private Dictionary<int, string> rules = new Dictionary<int, string>
         {
             { 3, "Foo" },
             { 4, "Baz" }, 
