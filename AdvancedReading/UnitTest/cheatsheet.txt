@@ -1,0 +1,18 @@
+dotnet sln list
+
+dotnet new console -n Calculator -o .\AdvancedReading\UnitTest\src\Calculator
+
+dotnet new nunit -n Calculator.Tests -o .\AdvancedReading\UnitTest\tests\Calculator
+
+dotnet sln add .\AdvancedReading\UnitTest\src\Calculator\Calculator.csproj
+
+dotnet sln add .\AdvancedReading\UnitTest\tests\Calculator\Calculator.Tests.csproj
+
+cd project_location
+
+dotnet add .\tests\Calculator\Calculator.Tests.csproj reference .\src\Calculator\Calculator.csproj
+
+cd test_location
+
+dotnet test 
+
